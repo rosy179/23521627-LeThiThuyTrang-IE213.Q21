@@ -1,0 +1,332 @@
+db["employees"].find()
+use 23521627-IE213
+switched to db 23521627-IE213
+db.employees.insertMany([])
+MongoInvalidArgumentError: Invalid BulkOperation, Batch cannot be empty
+db.employees.insertMany([{"id":1,"name":{"first":"John","last":"Doe"},"age":48},
+  {"id":2,"name":{"first":"Jane","last":"Doe"},"age":16},
+  {"id":3,"name":{"first":"Alice","last":"A"},"age":32},
+  {"id":4,"name":{"first":"Bob","last":"B"},"age":64}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('69a682bccf4dabb71082e102'),
+    '1': ObjectId('69a682bccf4dabb71082e103'),
+    '2': ObjectId('69a682bccf4dabb71082e104'),
+    '3': ObjectId('69a682bccf4dabb71082e105')
+  }
+}
+db.employees.createIndex({ id: 1 }, { unique: true })
+id_1
+db.employees.insertMany([{"id":1,"name":{"first":"John","last":"Doe"},"age":48},
+  {"id":2,"name":{"first":"Jane","last":"Doe"},"age":16},
+  {"id":3,"name":{"first":"Alice","last":"A"},"age":32},
+  {"id":4,"name":{"first":"Bob","last":"B"},"age":64}])
+MongoBulkWriteError: E11000 duplicate key error collection: 23521627-IE213.employees index: id_1 dup key: { id: 1 }
+db.employees.insertMany([
+  {"id":2,"name":{"first":"Jane","last":"Doe"},"age":16},
+  {"id":3,"name":{"first":"Alice","last":"A"},"age":32},
+  {"id":4,"name":{"first":"Bob","last":"B"},"age":64}])
+MongoBulkWriteError: E11000 duplicate key error collection: 23521627-IE213.employees index: id_1 dup key: { id: 2 }
+db.employees.find({
+  "name.first": "John",
+  "name.last": "Doe"
+})
+{
+  _id: ObjectId('69a682bccf4dabb71082e102'),
+  id: 1,
+  name: {
+    first: 'John',
+    last: 'Doe'
+  },
+  age: 48
+}
+db.employees.find({
+  age: { $gt: 30, $lt: 60 }
+})
+{
+  _id: ObjectId('69a682bccf4dabb71082e102'),
+  id: 1,
+  name: {
+    first: 'John',
+    last: 'Doe'
+  },
+  age: 48
+}
+{
+  _id: ObjectId('69a682bccf4dabb71082e104'),
+  id: 3,
+  name: {
+    first: 'Alice',
+    last: 'A'
+  },
+  age: 32
+}
+db.employees.insertMany([{"id":5,"name":{"first":"Rooney", "middle":"K", "last":"A"},"age":30}
+{"id":6,"name":{"first":"Ronaldo", "middle":"T", "last":"B"},"age":60}])
+SyntaxError: Unexpected token, expected "," (2:0)
+
+  1 | db.employees.insertMany([{"id":5,"name":{"first":"Rooney", "middle":"K", "last":"A"},"age":30}
+> 2 | {"id":6,"name":{"first":"Ronaldo", "middle":"T", "last":"B"},"age":60}])
+    | ^
+db.employees.insertMany([{"id":5,"name":{"first":"Rooney", "middle":"K", "last":"A"},"age":30},
+{"id":6,"name":{"first":"Ronaldo", "middle":"T", "last":"B"},"age":60}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('69a68551cf4dabb71082e10d'),
+    '1': ObjectId('69a68551cf4dabb71082e10e')
+  }
+}
+db.employees.find({
+  "name.middle": { $exists: true }
+})
+{
+  _id: ObjectId('69a68551cf4dabb71082e10d'),
+  id: 5,
+  name: {
+    first: 'Rooney',
+    middle: 'K',
+    last: 'A'
+  },
+  age: 30
+}
+{
+  _id: ObjectId('69a68551cf4dabb71082e10e'),
+  id: 6,
+  name: {
+    first: 'Ronaldo',
+    middle: 'T',
+    last: 'B'
+  },
+  age: 60
+}
+db.employees.updateMany(
+  { "name.middle": { $exists: true } },
+  { $unset: { "name.middle": "" } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+db.employees.find()
+{
+  _id: ObjectId('69a682bccf4dabb71082e102'),
+  id: 1,
+  name: {
+    first: 'John',
+    last: 'Doe'
+  },
+  age: 48
+}
+{
+  _id: ObjectId('69a682bccf4dabb71082e103'),
+  id: 2,
+  name: {
+    first: 'Jane',
+    last: 'Doe'
+  },
+  age: 16
+}
+{
+  _id: ObjectId('69a682bccf4dabb71082e104'),
+  id: 3,
+  name: {
+    first: 'Alice',
+    last: 'A'
+  },
+  age: 32
+}
+{
+  _id: ObjectId('69a682bccf4dabb71082e105'),
+  id: 4,
+  name: {
+    first: 'Bob',
+    last: 'B'
+  },
+  age: 64
+}
+{
+  _id: ObjectId('69a68551cf4dabb71082e10d'),
+  id: 5,
+  name: {
+    first: 'Rooney',
+    last: 'A'
+  },
+  age: 30
+}
+{
+  _id: ObjectId('69a68551cf4dabb71082e10e'),
+  id: 6,
+  name: {
+    first: 'Ronaldo',
+    last: 'B'
+  },
+  age: 60
+}
+db.employees.updateMany(
+  {},
+  { $set: { organization: "UIT" } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 6,
+  modifiedCount: 6,
+  upsertedCount: 0
+}
+db.employees.find()
+{
+  _id: ObjectId('69a682bccf4dabb71082e102'),
+  id: 1,
+  name: {
+    first: 'John',
+    last: 'Doe'
+  },
+  age: 48,
+  organization: 'UIT'
+}
+{
+  _id: ObjectId('69a682bccf4dabb71082e103'),
+  id: 2,
+  name: {
+    first: 'Jane',
+    last: 'Doe'
+  },
+  age: 16,
+  organization: 'UIT'
+}
+{
+  _id: ObjectId('69a682bccf4dabb71082e104'),
+  id: 3,
+  name: {
+    first: 'Alice',
+    last: 'A'
+  },
+  age: 32,
+  organization: 'UIT'
+}
+{
+  _id: ObjectId('69a682bccf4dabb71082e105'),
+  id: 4,
+  name: {
+    first: 'Bob',
+    last: 'B'
+  },
+  age: 64,
+  organization: 'UIT'
+}
+{
+  _id: ObjectId('69a68551cf4dabb71082e10d'),
+  id: 5,
+  name: {
+    first: 'Rooney',
+    last: 'A'
+  },
+  age: 30,
+  organization: 'UIT'
+}
+{
+  _id: ObjectId('69a68551cf4dabb71082e10e'),
+  id: 6,
+  name: {
+    first: 'Ronaldo',
+    last: 'B'
+  },
+  age: 60,
+  organization: 'UIT'
+}
+db.employees.updateMany(
+  { id: { $in: [5, 6] } },
+  { $set: { organization: "USSH" } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+db.employees.find()
+{
+  _id: ObjectId('69a682bccf4dabb71082e102'),
+  id: 1,
+  name: {
+    first: 'John',
+    last: 'Doe'
+  },
+  age: 48,
+  organization: 'UIT'
+}
+{
+  _id: ObjectId('69a682bccf4dabb71082e103'),
+  id: 2,
+  name: {
+    first: 'Jane',
+    last: 'Doe'
+  },
+  age: 16,
+  organization: 'UIT'
+}
+{
+  _id: ObjectId('69a682bccf4dabb71082e104'),
+  id: 3,
+  name: {
+    first: 'Alice',
+    last: 'A'
+  },
+  age: 32,
+  organization: 'UIT'
+}
+{
+  _id: ObjectId('69a682bccf4dabb71082e105'),
+  id: 4,
+  name: {
+    first: 'Bob',
+    last: 'B'
+  },
+  age: 64,
+  organization: 'UIT'
+}
+{
+  _id: ObjectId('69a68551cf4dabb71082e10d'),
+  id: 5,
+  name: {
+    first: 'Rooney',
+    last: 'A'
+  },
+  age: 30,
+  organization: 'USSH'
+}
+{
+  _id: ObjectId('69a68551cf4dabb71082e10e'),
+  id: 6,
+  name: {
+    first: 'Ronaldo',
+    last: 'B'
+  },
+  age: 60,
+  organization: 'USSH'
+}
+db.employees.aggregate([
+  {
+    $match: {
+      organization: { $in: ["UIT", "USSH"] }
+    }
+  },
+  {
+    $group: {
+      _id: "$organization",
+      totalAge: { $sum: "$age" },
+      averageAge: { $avg: "$age" }
+    }
+  }
+])
+{
+  _id: 'USSH',
+  totalAge: 90,
+  averageAge: 45
+}
