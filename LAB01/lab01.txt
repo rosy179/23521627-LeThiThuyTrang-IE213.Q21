@@ -326,6 +326,11 @@ db.employees.aggregate([
   }
 ])
 {
+  _id: 'UIT',
+  totalAge: 160,
+  averageAge: 40
+}
+{
   _id: 'USSH',
   totalAge: 90,
   averageAge: 45
