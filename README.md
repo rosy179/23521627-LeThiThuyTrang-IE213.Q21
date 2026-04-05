@@ -279,7 +279,92 @@ Controller xử lý logic kinh doanh và gọi đến các phương thức DAO.
 
 ![Tích hợp Controller vào Route](LAB02/images/step-2.7-route-controller.png)
 
-### Lab03: chưa hoàn thành
+### Lab03: Hoàn thiện Back-end cho ứng dụng minh họa (Hoàn thành)\*\*
+
+**Mục tiêu bài thực hành**
+
+- Hoàn thiện backend cho ứng dụng Movie Reviews theo mô hình Route -> Controller -> DAO.
+- Bổ sung chức năng review CRUD, tra cứu phim theo ID kèm review và lấy danh sách rating.
+- Kiểm thử toàn bộ API bằng Insomnia.
+
+**Công cụ / môi trường sử dụng**
+
+- Node.js và JavaScript ES6.
+- Trình soạn thảo mã nguồn: Visual Studio Code.
+- Thư viện chính: `express`, `cors`, `dotenv`, `mongodb`, `nodemon`.
+- Cơ sở dữ liệu: MongoDB Atlas Cloud.
+- Công cụ kiểm thử API: Insomnia.
+
+**Cách chạy**
+
+- Bước 1: Vào thư mục `Lab03/movie-reviews/backend`.
+- Bước 2: Cài dependencies bằng `npm install`.
+- Bước 3: Cấu hình file `.env` với `MOVIEREVIEWS_DB_URI`, `MOVIEREVIEWS_NS`, `PORT`.
+- Bước 4: Chạy server bằng `npm run dev` hoặc `node index.js`.
+- Bước 5: Kiểm thử các endpoint sau bằng Insomnia:
+  - `GET /api/v1/movies`
+  - `GET /api/v1/movies/id/:id`
+  - `GET /api/v1/movies/ratings`
+  - `POST /api/v1/movies/review`
+  - `PUT /api/v1/movies/review`
+  - `DELETE /api/v1/movies/review`
+
+**Kết quả đầu ra**
+
+- Backend chạy thành công trên cổng cấu hình.
+- API trả được danh sách phim, phim theo ID kèm review, và danh sách rating.
+- Thêm, sửa, xóa review hoạt động qua endpoint `/api/v1/movies/review`.
+
+**Giải thích ngắn gọn phần chính đã thực hiện**
+
+- **Routing:** Dùng `express.Router()` để định tuyến request đến đúng controller.
+- **Controller:** Nhận dữ liệu từ `req.body` hoặc `req.params`, gọi DAO và trả JSON cho client.
+- **DAO:** Thao tác trực tiếp với MongoDB bằng `insertOne`, `updateOne`, `deleteOne`, `aggregate` và `distinct`.
+- **Tra cứu nâng cao:** Dùng `$lookup` để lấy phim kèm các review liên quan, và `distinct("rated")` để lấy danh sách rating.
+
+**Hình ảnh minh họa kết quả**
+
+**Bài 1 — Thiết lập định tuyến cho review**
+
+![alt text](LAB03/images/image.png)
+
+**Bài 2 — Thiết lập Controller cho review**
+
+![alt text](LAB03/images/image-1.png)
+
+**Bài 3 — Thiết lập DAO cho reviews**
+
+![alt text](LAB03/images/image-2.png)
+
+**3.6 — Thử nghiệm các API thêm / xóa / sửa dữ liệu**
+
+![Thêm](LAB03/images/image-3.png)
+![Sửa](LAB03/images/image-4.png)
+![Xóa](LAB03/images/image-5.png)
+
+**Bài 4 — Hoàn thành back-end cho ứng dụng minh họa**
+
+![alt text](LAB03/images/image-6.png)
+
+**4.1 — Thêm định tuyến lấy phim theo Id kèm review và lấy rating**
+
+**4.2 — Thêm controller `apiGetMovieById()` và `apiGetRatings()`**
+
+![alt text](LAB03/images/image-7.png)
+
+**4.3 — Thêm DAO `getMovieById()` và `getRatings()`**
+
+![alt text](LAB03/images/image-8.png)
+
+**4.4 — Thử nghiệm các API vừa tạo**
+
+**Kết quả API: Lấy tất cả thông tin của phim và các review liên quan theo Id phim**
+
+![alt text](LAB03/images/image-9.png)
+
+**Kết quả API: Lấy tất cả các loại rating của phim trên dữ liệu**
+
+![alt text](LAB03/images/image-10.png)
 
 ### Lab04: chưa hoàn thành
 
