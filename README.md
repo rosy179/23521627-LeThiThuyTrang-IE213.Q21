@@ -449,6 +449,129 @@ Kết quả cuối cùng
 
 ![alt text](LAB04/images/lab04-08-final-result.png)
 
-### Lab05: chưa hoàn thành
+### Lab05: Xây dựng Frontend với REACTJS (Hoàn thành)
+
+**Mục tiêu bài thực hành**
+
+- Xây dựng giao diện Frontend cho ứng dụng xem và đánh giá phim bằng ReactJS.
+- Kết nối frontend ReactJS với backend Movie Reviews bằng thư viện `axios`.
+- Xây dựng lớp dịch vụ dùng chung để gọi API từ backend một cách thống nhất.
+- Hoàn thiện các Component `MoviesList` và `Movie` để hiển thị danh sách phim, chi tiết phim và danh sách review tương ứng.
+
+**Công cụ / Môi trường sử dụng**
+
+- Thư viện chính: `ReactJS`.
+- Thư viện gọi API: `axios`.
+- Thư viện UI: `Bootstrap` và `React-Bootstrap`.
+- Thư viện điều hướng: `React Router Dom`.
+- Thư viện định dạng thời gian: `momentjs`.
+- Môi trường chạy: Node.js với trình quản lý gói `npm`.
+
+**Cách chạy**
+
+- **Bước 1:** Di chuyển vào thư mục `Lab05/movie-reviews/frontend`.
+- **Bước 2:** Cài đặt các gói cần thiết bằng lệnh `npm install`.
+- **Bước 3:** Đảm bảo Backend đang chạy (thường tại `http://localhost:5000`).
+- **Bước 4:** Khởi chạy ứng dụng bằng lệnh `npm start`.
+- **Bước 5:** Mở trình duyệt tại `http://localhost:3000` để kiểm tra giao diện.
+
+**Kết quả đầu ra**
+
+- Ứng dụng frontend React chạy thành công, kết nối mượt mà với API Backend.
+- `MovieDataService` cung cấp đầy đủ các hàm gọi API: `getAll()`, `get(id)`, `createReview()`, `updateReview()`, `deleteReview()`, `getRatings()`.
+- `MoviesList` hiển thị danh sách phim bằng `Card` của React-Bootstrap, hỗ trợ tìm kiếm theo tiêu đề và lọc theo rating.
+- Trang chi tiết phim hiển thị đầy đủ thông tin Plot và danh sách các Review liên quan.
+- Thời gian trong các review được định dạng chuyên nghiệp bằng `momentjs` (ví dụ: `18th April 2022`).
+
+**Giải thích ngắn gọn phần chính đã thực hiện**
+
+- **Kết nối backend:** Tạo lớp `MovieDataService` sử dụng `axios` để tập trung quản lý các lời gọi API từ frontend đến backend.
+- **Quản lý trạng thái:** Sử dụng Hook `useState()` để quản lý danh sách phim, thông tin tìm kiếm và dữ liệu chi tiết của từng bộ phim.
+- **Nạp dữ liệu động:** Sử dụng Hook `useEffect()` để tự động tải dữ liệu từ API khi component được khởi tạo hoặc khi có sự thay đổi trạng thái tìm kiếm.
+- **Xử lý hiển thị:** Dùng các component của `React-Bootstrap` như `Card`, `Button`, `Form` để xây dựng giao diện hiện đại và đáp ứng.
+- **Định dạng dữ liệu:** Sử dụng `momentjs` để chuyển đổi định dạng ngày tháng từ API sang định dạng dễ đọc cho người dùng.
+
+**Hình ảnh minh họa kết quả**
+
+**Bài 1: Kết nối tới Backend và Xây dựng MovieDataService**
+
+1.1 Cài đặt thư viện `axios` và khởi tạo instance kết nối với Backend URL.
+
+![alt text](LAB05/images/image.png)
+
+1.2 Xây dựng lớp dịch vụ `MovieDataService` trong `src/services/movies.js` để định nghĩa các phương thức gọi API.
+
+![alt text](LAB05/images/image-1.png)
+
+1.3 Tạo các lời gọi dịch vụ tới backend, sử dụng axios để gọi bao gồm: `getAll()`, `get(id)`, `createReview(data)`, `updateReview(data)`, `deleteReview(data)`, `getRatings()`.
+
+![alt text](LAB05/images/image-2.png)
+
+**Bài 2: Xây dựng MoviesList Component**
+
+2.1 Khai báo các biến trạng thái `movies`, `searchTitle`, `searchRating`, `ratings` bằng `useState()`.
+
+![alt text](LAB05/images/image-3.png)
+
+2.2 Xây dựng các hàm `retrieveMovies()` và `retrieveRatings()` để nạp dữ liệu ban đầu thông qua `useEffect()`.
+
+![alt text](LAB05/images/image-4.png)
+
+2.3 Thiết kế giao diện tìm kiếm gồm trường nhập Title và danh sách chọn Rating.
+
+![alt text](LAB05/images/image-5.png)
+
+2.4 Hiển thị danh sách phim dưới dạng các `Card` với hình ảnh, tiêu đề và nút xem review.
+
+![alt text](LAB05/images/image-6.png)
+
+2.5 Hiện thực logic tìm kiếm phim theo Title và Rating.
+
+![alt text](LAB05/images/image-7.png)
+
+_Kết quả giao diện trang chủ danh sách phim:_
+
+![alt text](LAB05/images/image-8.png)
+
+**Bài 3: Hiển thị thông tin trang movie khi nhấn vào `View Reviews`**
+
+3.1 Thiết lập mã nguồn cho component Movie trong tệp tin ./components/movie.js gồm các biến trạng thái movie để lưu trữ thông tin chi tiết của movie như id, title, rated, reviews.
+
+![alt text](LAB05/images/image-9.png)
+
+3.2 Xây dựng mã nguồn cho phương thức getMovie() trong component này để gọi phương thức get() trong MovieDataService.
+
+![alt text](LAB05/images/image-10.png)
+
+_Kết quả giao diện trang chi tiết phim:_
+
+![alt text](LAB05/images/image-11.png)
+
+**Bài 4: Hiển thị danh sách Review và định dạng thời gian**
+
+4.1 Viết đoạn mã nguồn JSX để duyệt qua danh sách review và hiển thị từng phản hồi của người dùng.
+
+![alt text](LAB05/images/image-12.png)
+
+4.2 Sử dụng thư viện `momentjs` để định dạng lại ngày tháng đánh giá (`Do MMMM YYYY`).
+
+![alt text](LAB05/images/image-13.png)
+
+_Kết quả hiển thị danh sách review:_
+
+![alt text](LAB05/images/image-14.png)
 
 ### Lab06: chưa hoàn thành
+
+**Sử dụng công cụ AI**
+Các công cụ AI được sử dụng trong quá trình soạn thảo và hoàn thiện tài liệu này:
+
+**GitHub Copilot**
+
+- Mục đích sử dụng: Hỗ trợ chỉnh sửa code, đề xuất cách cấu trúc lại thư mục, và gợi ý đổi tên/đường dẫn ảnh khi di chuyển file.
+- Phần được AI hỗ trợ: Chỉnh sửa/sắp xếp `images` `README.md`, tối ưu cấu trúc thư mục, sửa đường dẫn ảnh và tên file hình ảnh cho rõ nghĩa.
+
+**Gemini**
+
+- Mục đích sử dụng: Tra cứu tài liệu, tham khảo cú pháp MongoDB, Node.js, xây dựng testcase và giải thích lỗi khi chạy lệnh.
+- Phần được AI hỗ trợ: Đối chiếu cú pháp lệnh MongoDB, soạn testcase kiểm thử, phân tích nguyên nhân lỗi và đề xuất hướng khắc phục.
